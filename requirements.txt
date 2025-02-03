@@ -1,9 +1,6 @@
-streamlit
-pandas
-numpy
-networkx
-folium
-streamlit-folium
-scikit-learn
-
-openrouteservice
+streamlit==1.29.0
+folium==0.15.1
+streamlit-folium==0.8.1
+networkx==3.2.1
+osmnx==1.3.0
+python-dotenv==1.0.0
