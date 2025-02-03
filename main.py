@@ -21,7 +21,7 @@ load_dotenv()
 class LojaSustentavelRotaVerde:
     def __init__(self):
         # Configurações de API (substitua com suas credenciais)
-        self.GOOGLE_MAPS_API_KEY = 'SUA_CHAVE_API_GOOGLE'
+        self.GOOGLE_MAPS_API_KEY = 'AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0'
         
         # Coordenadas centrais de Amadora/Queluz
         self.CENTRO_AMADORA = (38.7613, -9.2351)
