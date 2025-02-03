@@ -71,17 +71,87 @@ class LojaSustentavel:
             st.error(f"Erro ao enviar e-mail: {e}")
             return False
 
+    def criar_mapa_google_html(self):
+        """Método para criar o mapa HTML do Google"""
+        return """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Mapa de Localização</title>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0&libraries=places&language=pt-BR"></script>
+            <style>
+                #map { height: 500px; width: 100%; }
+                #pac-input { 
+                    background-color: #fff;
+                    font-family: Roboto;
+                    font-size: 15px;
+                    font-weight: 300;
+                    margin-left: 12px;
+                    padding: 0 11px 0 13px;
+                    text-overflow: ellipsis;
+                    width: 300px;
+                }
+                #pac-input:focus { border-color: #4d90fe; }
+            </style>
+        </head>
+        <body>
+            <input id="pac-input" type="text" placeholder="Pesquise um local">
+            <div id="map"></div>
+            <script>
+                function initMap() {
+                    // Posição inicial (ajuste conforme necessário)
+                    const defaultLocation = { lat: -23.5505, lng: -46.6333 }; 
+                    
+                    const map = new google.maps.Map(document.getElementById('map'), {
+                        center: defaultLocation,
+                        zoom: 13
+                    });
+
+                    // Marker para a localização padrão
+                    const marker = new google.maps.Marker({
+                        position: defaultLocation,
+                        map: map,
+                        title: 'Localização Atual'
+                    });
+
+                    // Autocomplete para input
+                    const input = document.getElementById('pac-input');
+                    const autocomplete = new google.maps.places.Autocomplete(input);
+                    autocomplete.bindTo('bounds', map);
+
+                    // Adiciona listener para mudança de local
+                    autocomplete.addListener('place_changed', () => {
+                        const place = autocomplete.getPlace();
+
+                        if (!place.geometry) {
+                            window.alert("Nenhum detalhe disponível para: '" + place.name + "'");
+                            return;
+                        }
+
+                        // Centraliza o mapa no local selecionado
+                        if (place.geometry.viewport) {
+                            map.fitBounds(place.geometry.viewport);
+                        } else {
+                            map.setCenter(place.geometry.location);
+                            map.setZoom(17);
+                        }
+
+                        // Atualiza o marker
+                        marker.setPosition(place.geometry.location);
+                        marker.setTitle(place.name);
+                    });
+                }
+
+                // Inicializa o mapa quando a página carregar
+                window.onload = initMap;
+            </script>
+        </body>
+        </html>
+        """
+
     def criar_mapa_folium(self):
-        """Criar mapa interativo usando Folium"""
-        m = folium.Map(location=[-23.5505, -46.6333], zoom_start=12)  # Coordenadas de São Paulo
-        
-        # Adicionar marcadores de exemplo
-        folium.Marker(
-            location=[-23.5505, -46.6333],
-            popup="Localização da Loja",
-            icon=folium.Icon(color='green', icon='store')
-        ).add_to(m)
-        
+        """Criar mapa de backup usando Folium"""
+        m = folium.Map(location=[-23.5505, -46.6333], zoom_start=13)
         return m
 
     def executar(self):
@@ -103,14 +173,8 @@ class LojaSustentavel:
             with tabs[0]:
                 st.title("🚴 Otimizador de Percurso - GPS Ativo")
                 
-                # Criar mapa usando Folium
-                mapa = self.criar_mapa_folium()
-                st_folium(mapa, width=725)
-
-                # Adicionar campo de busca
-                endereco = st.text_input("Digite um endereço para pesquisar")
-                if endereco:
-                    st.write(f"Endereço digitado: {endereco}")
+                # Usar HTML do Google Maps com st.components.v1.html
+                st.components.v1.html(self.criar_mapa_google_html(), height=600, scrolling=True)
 
             with tabs[1]:
                 st.title("🛍️ Loja Sustentável")
@@ -138,7 +202,6 @@ class LojaSustentavel:
                         st.sidebar.write(f"{item} ({qtd}x) - 💲{subtotal:.2f}")
 
                     st.sidebar.write(f"**Total: 💲{total:.2f}**")
-                    
                     
                     # Finalização do pedido
                     endereco = st.sidebar.text_input("📍 Endereço de Entrega")
