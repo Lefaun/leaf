@@ -17,7 +17,7 @@ if usuario == "admin" and senha == "1234":
     with tabs[0]:
         st.title("🚴 Otimizador de Percurso - GPS Ativo")
 
-        st.html("<!DOCTYPE html>
+        st.html("
 <html>
   <head>
     <title>Maps and Places Autocomplete</title>
