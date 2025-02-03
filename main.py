@@ -71,81 +71,17 @@ class LojaSustentavel:
             st.error(f"Erro ao enviar e-mail: {e}")
             return False
 
-    def criar_mapa_google_html(self):
-        """Método para criar o mapa HTML do Google"""
-        return """
-        <head>
-            <title>Maps and Places Autocomplete</title>
-            <script>
-                async function init() {
-                    await customElements.whenDefined('gmp-map');
-
-                    const map = document.querySelector('gmp-map');
-                    const marker = document.querySelector('gmp-advanced-marker');
-                    const placePicker = document.querySelector('gmpx-place-picker');
-                    const infowindow = new google.maps.InfoWindow();
-
-                    map.innerMap.setOptions({
-                        mapTypeControl: false
-                    });
-
-                    placePicker.addEventListener('gmpx-placechange', () => {
-                        const place = placePicker.value;
-
-                        if (!place.location) {
-                            window.alert(
-                                "No details available for input: '" + place.name + "'"
-                            );
-                            infowindow.close();
-                            marker.position = null;
-                            return;
-                        }
-
-                        if (place.viewport) {
-                            map.innerMap.fitBounds(place.viewport);
-                        } else {
-                            map.center = place.location;
-                            map.zoom = 17;
-                        }
-
-                        marker.position = place.location;
-                        infowindow.setContent(
-                            `<strong>${place.displayName}</strong><br>
-                             <span>${place.formattedAddress}</span>
-                            `);
-                        infowindow.open(map.innerMap, marker);
-                    });
-                }
-
-                document.addEventListener('DOMContentLoaded', init);
-            </script>
-            <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
-            <style>
-                html, body {
-                    height: 100%;
-                    margin: 0;
-                    padding: 0;
-                }
-                .place-picker-container {
-                    padding: 20px;
-                }
-            </style>
-        </head>
-        <body>
-            <gmpx-api-loader key="AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0" solution-channel="GMP_GE_mapsandplacesautocomplete_v2">
-            </gmpx-api-loader>
-            <gmp-map center="40.749933,-73.98633" zoom="13" map-id="DEMO_MAP_ID">
-                <div slot="control-block-start-inline-start" class="place-picker-container">
-                    <gmpx-place-picker placeholder="Digite um endereço"></gmpx-place-picker>
-                </div>
-                <gmp-advanced-marker></gmp-advanced-marker>
-            </gmp-map>
-        </body>
-        """
-
     def criar_mapa_folium(self):
-        """Criar mapa de backup usando Folium"""
-        m = folium.Map(location=[0, 0], zoom_start=2)
+        """Criar mapa interativo usando Folium"""
+        m = folium.Map(location=[-23.5505, -46.6333], zoom_start=12)  # Coordenadas de São Paulo
+        
+        # Adicionar marcadores de exemplo
+        folium.Marker(
+            location=[-23.5505, -46.6333],
+            popup="Localização da Loja",
+            icon=folium.Icon(color='green', icon='store')
+        ).add_to(m)
+        
         return m
 
     def executar(self):
@@ -167,8 +103,14 @@ class LojaSustentavel:
             with tabs[0]:
                 st.title("🚴 Otimizador de Percurso - GPS Ativo")
                 
-                # Usar HTML do Google Maps
-                st.html(self.criar_mapa_google_html())
+                # Criar mapa usando Folium
+                mapa = self.criar_mapa_folium()
+                st_folium(mapa, width=725)
+
+                # Adicionar campo de busca
+                endereco = st.text_input("Digite um endereço para pesquisar")
+                if endereco:
+                    st.write(f"Endereço digitado: {endereco}")
 
             with tabs[1]:
                 st.title("🛍️ Loja Sustentável")
