@@ -139,6 +139,7 @@ class LojaSustentavel:
 
                     st.sidebar.write(f"**Total: 💲{total:.2f}**")
                     
+                    
                     # Finalização do pedido
                     endereco = st.sidebar.text_input("📍 Endereço de Entrega")
                     pagamento = st.sidebar.selectbox("💳 Forma de Pagamento", 
