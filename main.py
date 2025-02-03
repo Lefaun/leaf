@@ -18,7 +18,6 @@ if usuario == "admin" and senha == "1234":
         st.title("🚴 Otimizador de Percurso - GPS Ativo")
 
         st.html("
-<html>
   <head>
     <title>Maps and Places Autocomplete</title>
     <script>
@@ -88,8 +87,7 @@ if usuario == "admin" and senha == "1234":
       </div>
       <gmp-advanced-marker></gmp-advanced-marker>
     </gmp-map>
-  </body>
-</html>")
+  </body> ")
 
     with tabs[1]:  # Correção da posição da aba Loja Online
         st.title("🛍️ Loja Sustentável")
