@@ -79,7 +79,7 @@ if usuario == "admin" and senha == "1234":
     </style>
   </head>
   <body>
-    <gmpx-api-loader key="AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0" solution-channel="GMP_GE_mapsandplacesautocomplete_v2">
+    <gmpx-api-loader key=" APIKEY " solution-channel="GMP_GE_mapsandplacesautocomplete_v2">
     </gmpx-api-loader>
     <gmp-map center="40.749933,-73.98633" zoom="13" map-id="DEMO_MAP_ID">
       <div slot="control-block-start-inline-start" class="place-picker-container">
