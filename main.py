@@ -1,8 +1,14 @@
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
-import networkx as nx
+import requests
+import polyline
+import numpy as np
+import pandas as pd
+import geopandas as gpd
 import osmnx as ox
+import networkx as nx
+from shapely.geometry import Point, LineString
 import os
 from dotenv import load_dotenv
 import smtplib
@@ -12,9 +18,15 @@ from email.mime.text import MIMEText
 # Carregar variáveis de ambiente
 load_dotenv()
 
-class LojaSustentavel:
+class LojaSustentavelRotaVerde:
     def __init__(self):
-        # Configuração inicial
+        # Configurações de API (substitua com suas credenciais)
+        self.GOOGLE_MAPS_API_KEY = 'SUA_CHAVE_API_GOOGLE'
+        
+        # Coordenadas centrais de Amadora/Queluz
+        self.CENTRO_AMADORA = (38.7613, -9.2351)
+        
+        # Configurações iniciais do Streamlit
         st.set_page_config(page_title="Loja Sustentável", page_icon="🌱", layout="wide")
         
         # Lista de produtos
@@ -71,87 +83,82 @@ class LojaSustentavel:
             st.error(f"Erro ao enviar e-mail: {e}")
             return False
 
-    def criar_mapa_google_html(self):
-        """Método para criar o mapa HTML do Google"""
-        return """
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Mapa de Localização</title>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0&libraries=places&language=pt-BR"></script>
-            <style>
-                #map { height: 500px; width: 100%; }
-                #pac-input { 
-                    background-color: #fff;
-                    font-family: Roboto;
-                    font-size: 15px;
-                    font-weight: 300;
-                    margin-left: 12px;
-                    padding: 0 11px 0 13px;
-                    text-overflow: ellipsis;
-                    width: 300px;
-                }
-                #pac-input:focus { border-color: #4d90fe; }
-            </style>
-        </head>
-        <body>
-            <input id="pac-input" type="text" placeholder="Pesquise um local">
-            <div id="map"></div>
-            <script>
-                function initMap() {
-                    // Posição inicial (ajuste conforme necessário)
-                    const defaultLocation = { lat: -23.5505, lng: -46.6333 }; 
-                    
-                    const map = new google.maps.Map(document.getElementById('map'), {
-                        center: defaultLocation,
-                        zoom: 13
-                    });
-
-                    // Marker para a localização padrão
-                    const marker = new google.maps.Marker({
-                        position: defaultLocation,
-                        map: map,
-                        title: 'Localização Atual'
-                    });
-
-                    // Autocomplete para input
-                    const input = document.getElementById('pac-input');
-                    const autocomplete = new google.maps.places.Autocomplete(input);
-                    autocomplete.bindTo('bounds', map);
-
-                    // Adiciona listener para mudança de local
-                    autocomplete.addListener('place_changed', () => {
-                        const place = autocomplete.getPlace();
-
-                        if (!place.geometry) {
-                            window.alert("Nenhum detalhe disponível para: '" + place.name + "'");
-                            return;
-                        }
-
-                        // Centraliza o mapa no local selecionado
-                        if (place.geometry.viewport) {
-                            map.fitBounds(place.geometry.viewport);
-                        } else {
-                            map.setCenter(place.geometry.location);
-                            map.setZoom(17);
-                        }
-
-                        // Atualiza o marker
-                        marker.setPosition(place.geometry.location);
-                        marker.setTitle(place.name);
-                    });
-                }
-
-                // Inicializa o mapa quando a página carregar
-                window.onload = initMap;
-            </script>
-        </body>
-        </html>
+    def obter_dados_ambientais(self):
         """
+        Simula obtenção de dados de qualidade ambiental
+        """
+        zonas_verdes = [
+            {"nome": "Parque Aventura", "lat": 38.7550, "lon": -9.2300, "qualidade": 0.9},
+            {"nome": "Jardim Municipal", "lat": 38.7600, "lon": -9.2400, "qualidade": 0.8},
+            {"nome": "Área Verde Queluz", "lat": 38.7580, "lon": -9.2450, "qualidade": 0.85}
+        ]
+        return pd.DataFrame(zonas_verdes)
 
-    def criar_mapa_folium(self):
-        """Criar mapa de backup usando Folium"""
-        m = folium.Map(location=[-23.5505, -46.6333], zoom_start=13)
+    def calcular_melhor_rota(self, origem, destino):
+        """
+        Calcula rota otimizada considerando zonas verdes
+        """
+        url = f"https://maps.googleapis.com/maps/api/directions/json?origin={origem}&destination={destino}&mode=walking&alternatives=true&key={self.GOOGLE_MAPS_API_KEY}"
+        
+        response = requests.get(url).json()
+        
+        if response['status'] == 'OK':
+            rotas = []
+            for rota in response.get('routes', []):
+                pontos = polyline.decode(rota['overview_polyline']['points'])
+                qualidade_rota = self.avaliar_qualidade_rota(pontos)
+                
+                rotas.append({
+                    'distancia': rota['legs'][0]['distance']['text'],
+                    'duracao': rota['legs'][0]['duration']['text'],
+                    'pontos': pontos,
+                    'qualidade_ambiental': qualidade_rota
+                })
+            
+            return max(rotas, key=lambda x: x['qualidade_ambiental'])
+        
+        return None
+
+    def avaliar_qualidade_rota(self, pontos):
+        """
+        Avalia qualidade ambiental da rota
+        """
+        zonas_verdes = self.obter_dados_ambientais()
+        
+        pontuacao_total = 0
+        for lat, lon in pontos:
+            for _, zona in zonas_verdes.iterrows():
+                distancia = np.sqrt((lat - zona['lat'])**2 + (lon - zona['lon'])**2)
+                if distancia < 0.01:
+                    pontuacao_total += zona['qualidade']
+        
+        return pontuacao_total / len(pontos)
+
+    def criar_mapa_interativo(self, rota):
+        """Cria mapa interativo com rota otimizada"""
+        m = folium.Map(location=self.CENTRO_AMADORA, zoom_start=13)
+        
+        # Adiciona pontos de zonas verdes
+        zonas_verdes = self.obter_dados_ambientais()
+        for _, zona in zonas_verdes.iterrows():
+            folium.CircleMarker(
+                location=[zona['lat'], zona['lon']],
+                radius=5,
+                popup=zona['nome'],
+                color='green',
+                fill=True,
+                fillColor='green'
+            ).add_to(m)
+        
+        # Adiciona rota
+        if rota:
+            folium.PolyLine(
+                locations=rota['pontos'], 
+                color='blue', 
+                weight=5, 
+                opacity=0.8
+            ).add_to(m)
+        
         return m
 
     def executar(self):
@@ -168,13 +175,34 @@ class LojaSustentavel:
         # Verificação de credenciais
         if usuario == "admin" and senha == "1234":
             # Criação das abas
-            tabs = st.tabs(["Mapa", "Loja Online"])
+            tabs = st.tabs(["Rota Verde", "Loja Online"])
 
             with tabs[0]:
-                st.title("🚴 Otimizador de Percurso - GPS Ativo")
+                st.title("🍃 Otimizador de Rota Verde")
                 
-                # Usar HTML do Google Maps com st.components.v1.html
-                st.components.v1.html(self.criar_mapa_google_html(), height=600, scrolling=True)
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    origem = st.text_input("Origem", value="Amadora, Portugal")
+                
+                with col2:
+                    destino = st.text_input("Destino", value="Queluz, Portugal")
+                
+                if st.button("Calcular Melhor Rota Verde"):
+                    with st.spinner('Calculando rota otimizada...'):
+                        rota = self.calcular_melhor_rota(origem, destino)
+                        
+                        if rota:
+                            st.success(f"Rota encontrada!")
+                            st.write(f"Distância: {rota['distancia']}")
+                            st.write(f"Duração: {rota['duracao']}")
+                            st.write(f"Qualidade Ambiental: {rota['qualidade_ambiental']:.2%}")
+                            
+                            # Mapa interativo
+                            mapa = self.criar_mapa_interativo(rota)
+                            st_folium(mapa, width=700)
+                        else:
+                            st.error("Não foi possível calcular a rota.")
 
             with tabs[1]:
                 st.title("🛍️ Loja Sustentável")
@@ -231,7 +259,7 @@ class LojaSustentavel:
             st.session_state["carrinho"][produto] = 1
 
 def main():
-    app = LojaSustentavel()
+    app = LojaSustentavelRotaVerde()
     app.executar()
 
 if __name__ == "__main__":
