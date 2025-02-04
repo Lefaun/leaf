@@ -105,5 +105,6 @@ if __name__ == "__main__":
     app = LojaSustentavelRotaVerde()
     app.executar()
 
-if __name__ == "__main__":
-    main()
+
+#if __name__ == "__main__":
+    #main()
