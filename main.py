@@ -100,7 +100,8 @@ class LojaSustentavelRotaVerde:
                         st.success(f"{produto['nome']} adicionado ao carrinho!")
 
 
-                components.html("<html><head>
+               
+                html_string = "<html><head>
     <title>Displaying Text Directions With setPanel()</title>
     <script>
       /**
@@ -326,7 +327,7 @@ class LojaSustentavelRotaVerde:
   </body>
 </html>
     ")
-
+            st.markdown(html_string, unsafe_allow_html=True)
         else:
             st.error("Credenciais incorretas")
 
