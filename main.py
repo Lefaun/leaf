@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import os
 from dotenv import load_dotenv
+import streamlit.components.v1 as components
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -97,9 +98,9 @@ class LojaSustentavelRotaVerde:
                     st.write(f"{produto['nome']} - 💲{produto['preco']:.2f}")
                     if st.button(f"Adicionar {produto['nome']}"):
                         st.success(f"{produto['nome']} adicionado ao carrinho!")
-import streamlit.components.v1 as components
 
-                components.html("
+
+                st.components.html("
 <html>
   <head>
     <title>Displaying Text Directions With setPanel()</title>
