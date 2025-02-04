@@ -114,7 +114,7 @@ class LojaSustentavelRotaVerde:
                     float:left;
                 }}
                 #directionsPanel {{
-                    width: 70%;
+                    width: 30%;
                     height:500px;
                     overflow: auto;
                     float:right;
