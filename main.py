@@ -114,10 +114,10 @@ class LojaSustentavelRotaVerde:
                     
                 }}
                 #directionsPanel {{
-                    width: 30%;
+                    width: 70%;
                     height: 500px;
                     
-                    overflow: auto;
+                    
                     background: #f0f0f0;
                 }}
             </style>
@@ -129,7 +129,7 @@ class LojaSustentavelRotaVerde:
         </html>
         '''
         return mapa_html
-#;  padding: 10px;float: center;
+#;  padding: 10px;float: center; overflow: auto;
     def executar(self):
         """Método principal da aplicação."""
         st.sidebar.title("Login")
