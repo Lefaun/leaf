@@ -117,8 +117,8 @@ class LojaSustentavelRotaVerde:
                     width: 100%;
                     height: 500px;
                     float: center;
+                    overflow: auto;
                     
-                    padding: 10px;
                     background: #f0f0f0;
                 }}
             </style>
@@ -130,7 +130,7 @@ class LojaSustentavelRotaVerde:
         </html>
         '''
         return mapa_html
-#float: right; overflow: auto;
+#float: right;  padding: 10px;
     def executar(self):
         """Método principal da aplicação."""
         st.sidebar.title("Login")
