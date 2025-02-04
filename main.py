@@ -150,7 +150,7 @@ class LojaSustentavelRotaVerde:
                     components.html(mapa_html, height=550)
 
             with tabs[1]:
-                st.title("🛬️ Loja Sustentável")
+                st.title(" Loja Sustentável")
                 if "carrinho" not in st.session_state:
                     st.session_state.carrinho = []
                 
@@ -165,7 +165,7 @@ class LojaSustentavelRotaVerde:
                             st.success(f"{produto['nome']} adicionado ao carrinho!")
 
                 if st.session_state.carrinho:
-                    st.subheader("🍭 Seu Carrinho")
+                    st.subheader(" Seu Carrinho")
                     total = sum(item['preco'] for item in st.session_state.carrinho)
                     for item in st.session_state.carrinho:
                         st.write(f"{item['nome']} - 💲{item['preco']:.2f}")
@@ -185,4 +185,4 @@ class LojaSustentavelRotaVerde:
 
 if __name__ == "__main__":
     app = LojaSustentavelRotaVerde()
-    app.executar()
+    #app.executar()
