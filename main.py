@@ -185,4 +185,4 @@ class LojaSustentavelRotaVerde:
 
 if __name__ == "__main__":
     app = LojaSustentavelRotaVerde()
-    #app.executar()
+    app.executar()
