@@ -15,7 +15,7 @@ load_dotenv()
 class LojaSustentavelRotaVerde:
     def __init__(self):
         # Configurações de API (substitua com sua chave real)
-        self.GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY', 'AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0')
+        self.GOOGLE_MAPS_API_KEY = os.getenv('AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0', 'AIzaSyCYgm77s7P8Hx3ucAPqSxej4jUpko46Rn0')
         self.CENTRO_AMADORA = "38.7613,-9.2351"
         
         # Configuração do Streamlit
