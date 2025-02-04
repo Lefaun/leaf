@@ -325,8 +325,7 @@ class LojaSustentavelRotaVerde:
       defer
     ></script>
   </body>
-</html>
-    ")
+</html>")
             st.markdown(html_string, unsafe_allow_html=True)
         else:
             st.error("Credenciais incorretas")
