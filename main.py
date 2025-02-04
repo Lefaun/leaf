@@ -89,7 +89,7 @@ class LojaSustentavelRotaVerde:
                         {{
                             origin: "{origem}, Portugal",
                             destination: "{destino}, Portugal",
-                            travelMode: google.maps.TravelMode.WALKING
+                            travelMode: google.maps.TravelMode.CYCLING
                         }},
                         (response, status) => {{
                             if (status === "OK") {{
