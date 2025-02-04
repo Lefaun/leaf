@@ -141,7 +141,7 @@ class LojaSustentavelRotaVerde:
             tabs = st.tabs(["Rota Verde", "Loja Online"])
 
             with tabs[0]:
-                st.title("🌳 Otimizador de Rota Verde")
+                st.title("🌳 Percurso de ciclovia Verde")
                 origem = st.selectbox("Selecione a origem:", self.cidades)
                 destino = st.selectbox("Selecione o destino:", self.cidades)
                 
@@ -150,7 +150,7 @@ class LojaSustentavelRotaVerde:
                     components.html(mapa_html, height=550)
 
             with tabs[1]:
-                st.title("🛬️ Loja Sustentável")
+                st.title("Loja Sustentável")
                 if "carrinho" not in st.session_state:
                     st.session_state.carrinho = []
                 
@@ -158,20 +158,20 @@ class LojaSustentavelRotaVerde:
                 for idx, produto in enumerate(self.produtos):
                     with cols[idx % 3]:
                         st.image(produto['img'], width=150)
-                        st.write(f"**{produto['nome']}** - 💲{produto['preco']:.2f}")
+                        st.write(f"**{produto['nome']}** - €{produto['preco']:.2f}")
                         if st.button(f"Adicionar {produto['nome']}", key=produto['nome']):
                             st.session_state.carrinho.append(produto)
                             st.success(f"{produto['nome']} adicionado ao carrinho!")
 
                 if st.session_state.carrinho:
-                    st.subheader("🍭 Seu Carrinho")
+                    st.subheader("O Seu Carrinho")
                     total = sum(item['preco'] for item in st.session_state.carrinho)
                     for item in st.session_state.carrinho:
-                        st.write(f"{item['nome']} - 💲{item['preco']:.2f}")
-                    st.write(f"**Total: 💲{total:.2f}**")
+                        st.write(f"{item['nome']} - €{item['preco']:.2f}")
+                    st.write(f"**Total: €{total:.2f}**")
 
                     endereco = st.text_input("Endereço para entrega")
-                    pagamento = st.selectbox("Forma de pagamento", ["Cartão", "Dinheiro", "Transferência Bancária"])
+                    pagamento = st.selectbox("Forma de pagamento", [,"MBWAY","Cartão", "Dinheiro", "Transferência Bancária"])
                     if st.button("Finalizar Pedido"):
                         produtos_nomes = ', '.join([p['nome'] for p in st.session_state.carrinho])
                         if self.enviar_email(produtos_nomes, total, endereco, pagamento):
