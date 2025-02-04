@@ -20,10 +20,10 @@ class LojaSustentavelRotaVerde:
         st.set_page_config(page_title="Loja Sustentável", page_icon="🌱", layout="wide")
         
         # Lista de produtos
-        st.title("🛍️ Loja Sustentável")
+        st.title("Green Leaf")
 
         # Lista de produtos
-        produtos = [
+        self.produtos = [
             {"nome": "Cesta Orgânica", "preco": 12.99, "img": "Horta.png"},
             {"nome": "Sabonete Natural", "preco": 7.50, "img": "soap.png"},
             {"nome": "Bolsa Ecológica", "preco": 15.00, "img": "BolsaCometico.png"},
@@ -37,18 +37,7 @@ class LojaSustentavelRotaVerde:
 
         # Inicializar carrinho
         st.session_state.setdefault("carrinho", {})
-        self.produtos = [
-          
-            {"nome": "Cesta Orgânica", "preco": 12.99, "img": "Horta.png"},
-            {"nome": "Sabonete Natural", "preco": 7.50, "img": "soap.png"},
-            {"nome": "Bolsa Ecológica", "preco": 15.00, "img": "BolsaCometico.png"},
-            {"nome": "Kit Bambu", "preco": 9.99, "img": "KitBambu.png"},
-            {"nome": "Mel Orgânico", "preco": 18.50, "img": "mel.png"},
-            {"nome": "Horta Caseira", "preco": 25.00, "img": "Horta.jpg"},
-            {"nome": "Cosméticos Naturais", "preco": 19.99, "img": "Cosmetico.png"},
-            {"nome": "Chá Artesanal", "preco": 10.99, "img": "Chá.jpg"},
-            {"nome": "Velas Ecológicas", "preco": 14.50, "img": "Velas.png"},
-        ]
+        
 
         # Lista de cidades
         self.cidades = [
