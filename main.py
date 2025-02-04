@@ -171,7 +171,7 @@ class LojaSustentavelRotaVerde:
                     st.write(f"**Total: €{total:.2f}**")
 
                     endereco = st.text_input("Endereço para entrega")
-                    pagamento = st.selectbox("Forma de pagamento", [,"MBWAY","Cartão", "Dinheiro", "Transferência Bancária"])
+                    pagamento = st.selectbox("Forma de pagamento", ["MBWAY","Cartão", "Dinheiro", "Transferência Bancária"])
                     if st.button("Finalizar Pedido"):
                         produtos_nomes = ', '.join([p['nome'] for p in st.session_state.carrinho])
                         if self.enviar_email(produtos_nomes, total, endereco, pagamento):
