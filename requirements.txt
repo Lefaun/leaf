@@ -1,42 +1,6 @@
-# Frameworks Web
-streamlit==1.32.0
-fastapi==0.109.2
+streamlit
 requests
-# Processamento de Dados
-pandas==2.2.1
-numpy==1.26.4
-geopandas==0.14.3
-
-# Geoespacial e Mapas
-folium==0.16.0
-streamlit-folium==0.11.0
-osmnx==1.3.0
-requests==2.31.0
-polyline==2.0.0
-
-# Visualização
-matplotlib==3.8.3
-plotly==5.20.0
-
-# Processamento Geográfico
-shapely==2.0.1
-networkx==3.2.1
-
-# APIs e Autenticação
-python-dotenv==1.0.1
-
-# E-mail
-email-validator==2.1.1
-
-# Segurança e Autenticação
-python-jose==3.3.0
-passlib==1.7.4
-
-# Desenvolvimento
-pytest==8.1.1
-black==24.2.0
-flake8==7.0.0
-
-# Extras
-tqdm==4.66.2
-rich==13.7.1
+python-dotenv
+numpy
+pandas
+polyline
