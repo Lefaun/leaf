@@ -1,7 +1,7 @@
 # Frameworks Web
 streamlit==1.32.0
 fastapi==0.109.2
-
+requests
 # Processamento de Dados
 pandas==2.2.1
 numpy==1.26.4
