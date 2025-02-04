@@ -157,7 +157,7 @@ class LojaSustentavelRotaVerde:
                 cols = st.columns(3)
                 for idx, produto in enumerate(self.produtos):
                     with cols[idx % 3]:
-                        st.image(produto['img'], width=220)
+                        st.image(produto['img'], width=350)
                         st.write(f"**{produto['nome']}** - €{produto['preco']:.2f}")
                         if st.button(f"Adicionar {produto['nome']}", key=produto['nome']):
                             st.session_state.carrinho.append(produto)
