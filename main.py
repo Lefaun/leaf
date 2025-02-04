@@ -100,9 +100,7 @@ class LojaSustentavelRotaVerde:
                         st.success(f"{produto['nome']} adicionado ao carrinho!")
 
 
-                 components.html("
-<html>
-  <head>
+                components.html("<html><head>
     <title>Displaying Text Directions With setPanel()</title>
     <script>
       /**
