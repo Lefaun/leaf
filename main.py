@@ -40,10 +40,10 @@ with tabs[1]:
         
 
         # Lista de cidades
-        self.cidades = [
-            "Sintra", "Oeiras", "Queluz", "Amadora", "Benfica", 
-            "Cascais", "Lisboa", "Almada", "Setúbal"
-        ]
+    self.cidades = [
+        "Sintra", "Oeiras", "Queluz", "Amadora", "Benfica", 
+        "Cascais", "Lisboa", "Almada", "Setúbal"
+    ]
 
     def enviar_email(self, pedido, total, endereco, pagamento):
         """Envia um e-mail com os detalhes do pedido."""
