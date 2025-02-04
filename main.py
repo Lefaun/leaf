@@ -20,30 +20,23 @@ class LojaSustentavelRotaVerde:
         st.set_page_config(page_title="Loja Sustentável", page_icon="🌱", layout="wide")
         
         # Lista de produtos
-        st.title("Green Leaf")
-with tabs[1]:
-    st.title("🛒 Loja Sustentável")
-
-    produtos = [
-        {"nome": "Cesta Orgânica", "preco": 12.99, "img": "Horta.png"},
-        {"nome": "Sabonete Natural", "preco": 7.50, "img": "soap.png"},
-        {"nome": "Bolsa Ecológica", "preco": 15.00, "img": "BolsaCometico.png"},
-        {"nome": "Kit Bambu", "preco": 9.99, "img": "KitBambu.png"},
-        {"nome": "Mel Orgânico", "preco": 18.50, "img": "mel.png"},
-        {"nome": "Horta Caseira", "preco": 25.00, "img": "Horta.jpg"},
-        {"nome": "Cosméticos Naturais", "preco": 19.99, "img": "Cosmetico.png"},
-        {"nome": "Chá Artesanal", "preco": 10.99, "img": "Chá.jpg"},
-        {"nome": "Velas Ecológicas", "preco": 14.50, "img": "Velas.png"},
-    ]
-
-    st.session_state.setdefault("carrinho", {})
-        
+        self.produtos = [
+            {"nome": "Cesta Orgânica", "preco": 12.99, "img": "Horta.png"},
+            {"nome": "Sabonete Natural", "preco": 7.50, "img": "soap.png"},
+            {"nome": "Bolsa Ecológica", "preco": 15.00, "img": "BolsaCometico.png"},
+            {"nome": "Kit Bambu", "preco": 9.99, "img": "KitBambu.png"},
+            {"nome": "Mel Orgânico", "preco": 18.50, "img": "mel.png"},
+            {"nome": "Horta Caseira", "preco": 25.00, "img": "Horta.jpg"},
+            {"nome": "Cosméticos Naturais", "preco": 19.99, "img": "Cosmetico.png"},
+            {"nome": "Chá Artesanal", "preco": 10.99, "img": "Chá.jpg"},
+            {"nome": "Velas Ecológicas", "preco": 14.50, "img": "Velas.png"},
+        ]
 
         # Lista de cidades
-    self.cidades = [
-        "Sintra", "Oeiras", "Queluz", "Amadora", "Benfica", 
-        "Cascais", "Lisboa", "Almada", "Setúbal"
-    ]
+        self.cidades = [
+            "Sintra", "Oeiras", "Queluz", "Amadora", "Benfica", 
+            "Cascais", "Lisboa", "Almada", "Setúbal"
+        ]
 
     def enviar_email(self, pedido, total, endereco, pagamento):
         """Envia um e-mail com os detalhes do pedido."""
@@ -58,7 +51,7 @@ with tabs[1]:
             msg["Subject"] = "Novo Pedido - Loja Sustentável"
             
             corpo_email = f"""
-            🛙️ Novo pedido recebido!
+            🛬️ Novo pedido recebido!
             Produtos:
             {pedido}
             Total: 💲{total:.2f}
@@ -148,7 +141,7 @@ with tabs[1]:
             tabs = st.tabs(["Rota Verde", "Loja Online"])
 
             with tabs[0]:
-                st.title("🌳 Otimizador de Rota Verde")
+                st.title("🌳 Green Leaf - Rota Verde")
                 origem = st.selectbox("Selecione a origem:", self.cidades)
                 destino = st.selectbox("Selecione o destino:", self.cidades)
                 
@@ -157,28 +150,34 @@ with tabs[1]:
                     components.html(mapa_html, height=550)
 
             with tabs[1]:
-                st.title("🛙️ Loja Sustentável")
-                carrinho = []
-                total = 0
+                st.title("🛬️ Loja Sustentável")
+                if "carrinho" not in st.session_state:
+                    st.session_state.carrinho = []
                 
                 for produto in self.produtos:
-                    if st.button(f"Adicionar {produto['nome']}"):
-                        carrinho.append(produto)
-                        total += produto['preco']
-                        st.success(f"{produto['nome']} adicionado ao carrinho!")
+                    col1, col2 = st.columns([1, 3])
+                    with col1:
+                        st.image(produto['img'], width=100)
+                    with col2:
+                        st.write(f"**{produto['nome']}** - 💲{produto['preco']:.2f}")
+                        if st.button(f"Adicionar {produto['nome']}"):
+                            st.session_state.carrinho.append(produto)
+                            st.success(f"{produto['nome']} adicionado ao carrinho!")
 
-                if carrinho:
+                if st.session_state.carrinho:
                     st.subheader("🍭 Seu Carrinho")
-                    for item in carrinho:
+                    total = sum(item['preco'] for item in st.session_state.carrinho)
+                    for item in st.session_state.carrinho:
                         st.write(f"{item['nome']} - 💲{item['preco']:.2f}")
                     st.write(f"**Total: 💲{total:.2f}**")
 
                     endereco = st.text_input("Endereço para entrega")
                     pagamento = st.selectbox("Forma de pagamento", ["Cartão", "Dinheiro", "Transferência Bancária"])
                     if st.button("Finalizar Pedido"):
-                        produtos_nomes = ', '.join([p['nome'] for p in carrinho])
+                        produtos_nomes = ', '.join([p['nome'] for p in st.session_state.carrinho])
                         if self.enviar_email(produtos_nomes, total, endereco, pagamento):
                             st.success("📧 Pedido enviado com sucesso!")
+                            st.session_state.carrinho.clear()
                         else:
                             st.error("Erro ao enviar o pedido.")
         else:
