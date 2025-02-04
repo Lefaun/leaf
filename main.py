@@ -21,9 +21,7 @@ class LojaSustentavelRotaVerde:
         
         # Lista de produtos
         self.produtos = [
-            {"nome": "Cesta Orgânica", "preco": 12.99},
-            {"nome": "Sabonete Natural", "preco": 7.50},
-            {"nome": "Bolsa Ecológica", "preco": 15.00},
+          
             {"nome": "Cesta Orgânica", "preco": 12.99, "img": "Horta.png"},
             {"nome": "Sabonete Natural", "preco": 7.50, "img": "soap.png"},
             {"nome": "Bolsa Ecológica", "preco": 15.00, "img": "BolsaCometico.png"},
