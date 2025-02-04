@@ -21,9 +21,10 @@ class LojaSustentavelRotaVerde:
         
         # Lista de produtos
         st.title("Green Leaf")
+     with tabs[1]:
+         st.title("🛒 Loja Sustentável")
 
-        # Lista de produtos
-        self.produtos = [
+        produtos = [
             {"nome": "Cesta Orgânica", "preco": 12.99, "img": "Horta.png"},
             {"nome": "Sabonete Natural", "preco": 7.50, "img": "soap.png"},
             {"nome": "Bolsa Ecológica", "preco": 15.00, "img": "BolsaCometico.png"},
@@ -35,8 +36,7 @@ class LojaSustentavelRotaVerde:
             {"nome": "Velas Ecológicas", "preco": 14.50, "img": "Velas.png"},
         ]
 
-        # Inicializar carrinho
-        st.session_state.setdefault("carrinho", {})
+            st.session_state.setdefault("carrinho", {})
         
 
         # Lista de cidades
