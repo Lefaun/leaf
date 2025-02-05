@@ -108,6 +108,12 @@ class LojaSustentavelRotaVerde:
                 }}
             </script>
             <style>
+
+               #container {{
+        display: flex;
+        flex-direction: column; /* Coloca as divs uma embaixo da outra */
+        height: 100vh; /* Ocupa 100% da altura da tela */
+    }}
                 #map {{
                     height: 500px;
                     width: 100%;
@@ -143,8 +149,10 @@ class LojaSustentavelRotaVerde:
             </style>
         </head>
         <body onload="initMap()">
+            <div id="container">
             <div id="map"></div>
             <div id="directionsPanel"></div>
+            <div>
         </body>
         </html>
         '''
