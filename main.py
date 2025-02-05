@@ -109,44 +109,36 @@ class LojaSustentavelRotaVerde:
             </script>
             <style>
 
-               #container {{
+              #container { { 
         display: flex;
-        flex-direction: column; /* Coloca as divs uma embaixo da outra */
+        flex-direction: column; /* Empilha as divs verticalmente */
         height: 100vh; /* Ocupa 100% da altura da tela */
-    }}
-                #map {{
-                    height: 500px;
-                    width: 100%;
-                    flex:1;
-                    
-                    
-                }}
-                #directionsPanel {{
-                    width: 100%;
-                    height:500%;
-                    overflow: visible;
-                    background: #f0f0f0;
-                }}
-                @media (max-width: 180px) {{
+    } }
+
     #map {{
+        flex: 1; /* O mapa ocupa o espaço restante */
         width: 100%;
-        height: 150px; /* Adjust height for small screens */
-    }}
+        background-color: #ccc; /* Cor para visualizar o mapa */
+    } }
 
     #directionsPanel {{
+        height: 200px;  /* Painel com altura fixa */
         width: 100%;
-        height: 100%; /* Adjust height to fit screen */
-        font-size: 10px; /* Reduce text size */
-        padding: 2px; /* Minimize padding */
-        overflow: visible;
-        z-index: 1;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        background: #f0f0f0; /* Background for readability */
-        border-top: 2px solid #ccc; /* Visual separation */
-    }}
-  }}
+        background: #f0f0f0;
+        overflow: auto; /* Se o conteúdo for maior, adiciona rolagem */
+        padding: 10px;
+        border-top: 2px solid #ccc;
+    } }
+    
+
+    /* Responsividade para telas menores */
+    @media (max-width: 600px)  { { 
+        #directionsPanel { { 
+            height: 150px; /* Painel menor em telas pequenas */
+            font-size: 12px;
+            padding: 5px;
+        } }
+    } }
             </style>
         </head>
         <body onload="initMap()">
