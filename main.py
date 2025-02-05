@@ -116,13 +116,13 @@ class LojaSustentavelRotaVerde:
     }}
 
     #map {{
-        flex: 1; /* O mapa ocupa o espaço restante */
         width: 100%;
+        height:100%;
         background-color: #ccc; /* Cor para visualizar o mapa */
     }}
 
     #directionsPanel {{
-        height: 200%;  /* Painel com altura fixa */
+        height:100%;  /* Painel com altura fixa */
         width: 100%;
         background: #f0f0f0;
         overflow: auto; /* Se o conteúdo for maior, adiciona rolagem */
