@@ -112,7 +112,7 @@ class LojaSustentavelRotaVerde:
               #container{{ 
         display: flex;
         flex-direction: column; /* Empilha as divs verticalmente */
-        height: 100vh; /* Ocupa 100% da altura da tela */
+        height: 100%; /* Ocupa 100% da altura da tela */
     }}
 
     #map {{
@@ -122,7 +122,7 @@ class LojaSustentavelRotaVerde:
     }}
 
     #directionsPanel {{
-        height: 200px;  /* Painel com altura fixa */
+        height: 200%;  /* Painel com altura fixa */
         width: 100%;
         background: #f0f0f0;
         overflow: auto; /* Se o conteúdo for maior, adiciona rolagem */
@@ -134,7 +134,7 @@ class LojaSustentavelRotaVerde:
     /* Responsividade para telas menores */
     @media (max-width: 600px)  
         #directionsPanel {{ 
-            height: 150px; /* Painel menor em telas pequenas */
+            height: 75%; /* Painel menor em telas pequenas */
             font-size: 12px;
             padding: 5px;
         }}
