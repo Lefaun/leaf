@@ -111,7 +111,7 @@ class LojaSustentavelRotaVerde:
                 #map {{
                     height: 500px;
                     width: 70%;
-                    float:left;
+                    
                     
                 }}
                 #directionsPanel {{
@@ -128,7 +128,7 @@ class LojaSustentavelRotaVerde:
 
     #directionsPanel {{
         width: 100%;
-        height: 100px; /* Adjust height to fit screen */
+        height: 100%; /* Adjust height to fit screen */
         font-size: 10px; /* Reduce text size */
         padding: 2px; /* Minimize padding */
         overflow: visible;
