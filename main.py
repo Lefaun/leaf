@@ -110,13 +110,13 @@ class LojaSustentavelRotaVerde:
             <style>
                 #map {{
                     height: 500px;
-                    width: 70%;
+                    width: 100%;
                     
                     
                 }}
                 #directionsPanel {{
                     width: 100%;
-                    height:500px;
+                    height:500%;
                     overflow: visible;
                     background: #f0f0f0;
                 }}
