@@ -109,17 +109,17 @@ class LojaSustentavelRotaVerde:
             </script>
             <style>
 
-              #container { { 
+              #container{{ 
         display: flex;
         flex-direction: column; /* Empilha as divs verticalmente */
         height: 100vh; /* Ocupa 100% da altura da tela */
-    } }
+    }}
 
     #map {{
         flex: 1; /* O mapa ocupa o espaço restante */
         width: 100%;
         background-color: #ccc; /* Cor para visualizar o mapa */
-    } }
+    }}
 
     #directionsPanel {{
         height: 200px;  /* Painel com altura fixa */
@@ -128,17 +128,17 @@ class LojaSustentavelRotaVerde:
         overflow: auto; /* Se o conteúdo for maior, adiciona rolagem */
         padding: 10px;
         border-top: 2px solid #ccc;
-    } }
+    }}
     
 
     /* Responsividade para telas menores */
-    @media (max-width: 600px)  { { 
-        #directionsPanel { { 
+    @media (max-width: 600px)  
+        #directionsPanel {{ 
             height: 150px; /* Painel menor em telas pequenas */
             font-size: 12px;
             padding: 5px;
-        } }
-    } }
+        }}
+    }}
             </style>
         </head>
         <body onload="initMap()">
