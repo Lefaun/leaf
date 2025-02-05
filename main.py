@@ -111,12 +111,13 @@ class LojaSustentavelRotaVerde:
 
                #container {{
         display: flex;
-        flex-direction: flex-box; /* Coloca as divs uma embaixo da outra */
+        flex-direction: column; /* Coloca as divs uma embaixo da outra */
         height: 100vh; /* Ocupa 100% da altura da tela */
     }}
                 #map {{
                     height: 500px;
                     width: 100%;
+                    flex:1;
                     
                     
                 }}
