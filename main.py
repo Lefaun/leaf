@@ -117,7 +117,7 @@ class LojaSustentavelRotaVerde:
 
     #map {{
         width: 100%;
-        height:100%;
+        height:150%;
         background-color: #ccc; /* Cor para visualizar o mapa */
     }}
 
@@ -132,7 +132,10 @@ class LojaSustentavelRotaVerde:
     
 
     /* Responsividade para telas menores */
-    @media (max-width: 600px)  
+    @media (max-width: 600px)
+        #map {{
+        height:150%;
+        }}
         #directionsPanel {{ 
             height: 75%; /* Painel menor em telas pequenas */
             font-size: 12px;
